@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
             ' Licensed <%= pkg.license %> */\n',
         clean: {
             css: ['dist/**/*.css'],
-            js: ['dist/**/*.js']
+            js: ['dist/**/*.js','dist/**/*.map']
         },
         concat: {
             options: {
@@ -31,18 +31,22 @@ module.exports = function(grunt) {
                 dest: 'dist/'
             }
         },
-        uglify: {
-            options: {
-                banner: '<%= banner %>'
-            },
+        terser: {
+            options: {},
             js: {
                 expand: true,
                 cwd: 'dist/',
                 src: '**/*.js',
                 dest: 'dist/',
                 ext: '.min.js',
-                extDot: 'first'
-            }
+                extDot: 'last'
+            },
+        },
+        ts: {
+            js: {
+                tsconfig: "./tsconfig.json",
+                expand: true,
+            },
         },
         replace: {
             js: {
@@ -64,7 +68,7 @@ module.exports = function(grunt) {
         postcss: {
             options: {
                 processors: [
-                    require('postcss-cssnext')({
+                    require('postcss-preset-env')({
                         browsers: [
                             'Android 2.3',
                             'Android >= 4',
@@ -115,12 +119,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-terser');
+    grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-cssnano');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('dist-css', ['clean:css', 'concat:css', 'postcss', 'cssnano']);
-    grunt.registerTask('dist-js', ['clean:js', 'concat:js', 'uglify', 'replace']);
+    grunt.registerTask('dist-js', ['clean:js', 'ts', 'terser', 'replace']);
     grunt.registerTask('default', ['dist-css', 'dist-js']);
 };

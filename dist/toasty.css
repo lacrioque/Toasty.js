@@ -1,6 +1,6 @@
-/*! Toasty.js - v1.5.0 - 2018-05-04
+/*! Toasty.js - v1.5.5 - 2021-09-06
 * https://jakim.me/Toasty.js/
-* Copyright (c) 2015-2018 Jakim Hernández; Licensed MIT */
+* Copyright (c) 2015-2021 Jakim Hernández; Licensed MIT */
 .toast-container {
   position: fixed;
   z-index: 999999;
@@ -39,8 +39,8 @@
   -webkit-transition: all 0.32s ease-in-out;
   -o-transition: all 0.32s ease-in-out;
   transition: all 0.32s ease-in-out;
-  -webkit-box-shadow: 0px 0px 9px rgba(0, 0, 0, .25);
-  box-shadow: 0px 0px 9px rgba(0, 0, 0, .25);
+  -webkit-box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.25);
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
